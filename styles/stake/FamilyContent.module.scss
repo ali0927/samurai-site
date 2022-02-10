@@ -1,0 +1,29 @@
+.familyContent {
+  margin-top: 15px;
+  padding: 10px;
+  height: 100%;
+}
+
+.samuraiCards {
+  display: flex;
+  justify-content: space-between;
+  height: 60%;
+  flex-shrink: 1;
+}
+
+.action {
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field {
+  font-family: "Iceberg";
+}
+
+.bonuses {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

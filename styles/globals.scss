@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;700&family=Iceberg&family=Ma+Shan+Zheng&family=New+Tegomin&display=swap");
+@font-face {
+  font-family: "Never Settle";
+  src: url("/never_settle.otf");
+}
+@font-face {
+  font-family: "Custom Icons";
+  src: url("/custom_icons.ttf");
+}
+
+$dark: #000;
+$container-max-widths: (
+  sm: 300px,
+  md: 600px,
+  lg: 800px,
+  xl: 1000px,
+  xxl: 1200px,
+);
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/root";
+
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  z-index: 2000;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  transition: none;
+
+  overflow: hidden;
+}
+
+.pace.pace-inactive {
+  opacity: 0%;
+  transition: all 0.5s;
+}
+
+.pace .pace-progress {
+  position: absolute;
+}
+
+.pace .pace-progress::after {
+  display: block;
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  bottom: 0;
+  content: "SHOGUN SAMURAIS \A"attr(data-progress-text);
+  font-family: "Never Settle", sans-serif;
+  font-style: normal;
+  line-height: 1;
+  white-space: pre;
+  text-align: center;
+  color: white;
+  font-size: 5rem;
+  height: 10rem;
+  margin-bottom: -5rem;
+  width: 65rem;
+  margin-left: -32.5rem;
+  @include media-breakpoint-down(sm) {
+    font-size: 3rem;
+    height: 6rem;
+    margin-bottom: -3rem;
+    width: 39rem;
+    margin-left: -19.5rem;
+  }
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: "Work Sans", "Ma Shan Zheng", "New Tegomin", sans-serif;
+  font-style: italic;
+  text-align: start;
+  color: #fff;
+  @include media-breakpoint-up(sm) {
+    font-size: 16pt;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 11pt;
+  }
+}
+
+h1 {
+  font-family: "Never Settle", "Ma Shan Zheng", "New Tegomin", serif;
+  font-style: normal;
+  font-kerning: 1ex;
+  padding: 2rem;
+  @include media-breakpoint-up(sm) {
+    font-size: 64pt;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 48pt;
+  }
+}
+
+h2 {
+  font-family: "Never Settle", serif;
+  font-style: normal;
+  @include media-breakpoint-up(sm) {
+    font-size: 48pt;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 32pt;
+  }
+}
+
+.iceberg,
+.iceberg * {
+  font-family: "Iceberg";
+  font-style: normal;
+  @include media-breakpoint-up(sm) {
+    font-size: 28pt;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 20pt;
+  }
+}
+
+.bg-paper {
+  background-image: url("/background.png");
+  color: #000;
+}
+
+section {
+  margin: 0;
+  background-color: #000;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.5s;
+}
+
+a:hover {
+  color: #fd0211;
+}
+
+.clickable > * {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.clickable:hover > * {
+  color: #fd0211;
+}
+.disabled:hover {
+  cursor: not-allowed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.emphasis {
+  color: #fd0211;
+}
+
+.brush-button {
+  padding: 1rem 4rem;
+  width: auto;
+  height: fit-content;
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  background-image: url("/splash/brush.png");
+  background-size: 100% 100%;
+  background-origin: padding-box;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s;
+}
+
+.not-allowed {
+  cursor: not-allowed;
+  color: gray;
+  text-decoration: line-through;
+}
+
+.icon-opensea::before {
+  font-family: "Custom Icons";
+  display: inline-block;
+  content: "\e900";
+}

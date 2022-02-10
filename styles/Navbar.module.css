@@ -1,0 +1,24 @@
+.nav {
+  transition: all 0.5s;
+  justify-content: end;
+  min-height: 70px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16pt;
+}
+
+.navItems {
+  display: flex;
+}
+
+.navToggle {
+  padding-right: 10px;
+}
+
+.icon {
+  font-size: 1.5rem;
+}

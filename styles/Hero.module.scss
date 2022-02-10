@@ -1,0 +1,121 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  min-height: -webkit-fill-available;
+  width: 100%;
+  background-image: url("/background.png");
+  transition: all 1s;
+}
+
+.hero canvas {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+}
+
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  padding-top: 70px;
+  @include media-breakpoint-down(md) {
+    padding-top: 30%;
+  }
+  z-index: 7;
+}
+
+.samurai {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  max-width: 2160px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: -80px;
+  @include media-breakpoint-down(sm) {
+    bottom: -60px;
+  }
+}
+.samurai_half_container {
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.container_left {
+  margin-left: -150px;
+  @include media-breakpoint-down(sm) {
+    margin-left: -20vh;
+  }
+}
+.container_right {
+  margin-right: -150px;
+  transform: scaleX(-1);
+  @include media-breakpoint-down(sm) {
+    margin-right: -20vh;
+  }
+}
+
+.samurai img {
+  position: relative;
+  object-fit: contain;
+  transition: all 2s;
+  transition-delay: 0.5s;
+}
+
+.transition_in {
+  opacity: 1;
+}
+.transition_out {
+  opacity: 0;
+}
+
+.loading {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.branch {
+  max-width: 100%;
+  @include media-breakpoint-down(sm) {
+    opacity: 0.8;
+  }
+}
+
+.outer_img {
+  width: 110%;
+  max-width: 700px;
+  z-index: 2;
+
+  @include media-breakpoint-down(sm) {
+    height: 60vh;
+    width: auto;
+  }
+}
+
+.inner_img {
+  width: 40vw;
+  max-width: 540px;
+  margin-left: calc(-270px + 100vw / 900);
+  z-index: 1;
+
+  @include media-breakpoint-down(xl) {
+    display: none;
+  }
+}

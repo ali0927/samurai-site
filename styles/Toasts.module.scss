@@ -1,0 +1,14 @@
+.toast_header {
+  display: "flex";
+  justify-content: space-between;
+}
+.toast_header button {
+  font-size: 0.5rem;
+}
+
+.toastContainer {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  z-index: 16;
+}

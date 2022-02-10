@@ -1,0 +1,22 @@
+.familyListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkbox {
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+
+  &.selected {
+    background-color: black;
+  }
+}
+
+.actionCorner {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}

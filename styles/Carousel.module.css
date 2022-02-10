@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: calc(104vw * 5 / 12);
+  transform: skew(5deg) translateX(calc(-2vw));
+  width: 104vw;
+  max-width: 4000px;
+  max-height: 2000px;
+}
+.container .card {
+  flex: 1;
+  transition: all 1s;
+  height: 100%;
+  position: relative;
+}
+
+.container .card:hover {
+  flex-grow: 5;
+}
+.container .card:hover img {
+  filter: grayscale(0);
+}
+
+.container .card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 1s;
+}

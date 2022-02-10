@@ -1,0 +1,16 @@
+.quantity_button {
+  font-size: 2rem;
+  margin: 0 1rem;
+}
+.block {
+  background-color: black;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+}
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+}
+.footer .block {
+  margin: 0 0.5rem;
+}

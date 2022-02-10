@@ -1,0 +1,68 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+.stake {
+  font-style: normal;
+
+  :global(.card-header) {
+    color: black;
+    font-family: "Iceberg";
+  }
+
+  :global(.btn) {
+    font-family: "Iceberg";
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 4px;
+    height: min-content;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  z-index: 15;
+  overflow-y: auto;
+  height: 100vh;
+
+  :global(.row) {
+    padding: 16px 0;
+  }
+}
+
+.navigation {
+  margin: auto;
+}
+
+.staking {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 80%;
+}
+
+.playground {
+  flex-grow: 1;
+  height: 80%;
+  min-height: 550px;
+
+  @include media-breakpoint-down(lg) {
+    flex-grow: 0;
+    height: 550px;
+  }
+}
+
+.playgroundCol {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 16px;
+  @include media-breakpoint-down(lg) {
+    padding-top: 16px;
+  }
+}
+
+.toasts {
+  margin: 10px;
+}

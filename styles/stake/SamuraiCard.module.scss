@@ -1,0 +1,61 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+.samuraiCard {
+  width: 30%;
+  border: none;
+  box-shadow: 0 0.375rem 1.5rem 0 rgba(140, 152, 164, 0.25);
+  font-size: medium;
+  max-height: 300px;
+
+  @include media-breakpoint-down(sm) {
+    height: 175px;
+  }
+
+  img {
+    object-fit: contain;
+    height: auto;
+    width: 100%;
+  }
+
+  .details {
+    background-color: white;
+    font-family: "Iceberg";
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-start;
+    @include media-breakpoint-down(sm) {
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}
+
+.placeholder {
+  width: 30%;
+  font-family: "Iceberg";
+  color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+
+  @include media-breakpoint-down(sm) {
+    height: 175px;
+  }
+}
+
+.remove {
+  display: inline-block;
+  font-size: medium;
+  background-color: black;
+  color: white;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  font-family: Arial;
+}

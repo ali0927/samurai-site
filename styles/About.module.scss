@@ -1,0 +1,81 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+.bushido {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.bushido div {
+  position: relative;
+  z-index: 1;
+}
+.splatter {
+  position: absolute;
+  z-index: 0;
+  object-fit: contain;
+  object-position: top;
+  min-width: 0;
+  max-width: 50%;
+  opacity: 0.5;
+}
+
+.exposition {
+  z-index: 1;
+  padding: 2rem 0rem;
+  justify-content: start;
+  text-align: start;
+}
+
+.exposition h1 {
+  text-align: start;
+  padding: 0;
+}
+
+.top {
+  top: 0%;
+  right: 0%;
+}
+.bottom {
+  bottom: 0%;
+  left: 0%;
+}
+
+.clan {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: "Work Sans";
+}
+
+.clan img {
+  object-fit: scale-down;
+  height: 5rem;
+  margin: 1em;
+}
+.white {
+  position: absolute;
+  transform: translateX(-2px) translateY(-1px);
+  z-index: 0;
+}
+.red {
+  position: relative;
+}
+
+.title {
+  padding: 0;
+  font-weight: 800;
+}
+
+.subtitle {
+  padding: 0;
+  font-style: italic;
+  margin-bottom: 1em;
+}
+
+.description {
+  font-style: italic;
+  font-size: 0.9em;
+  opacity: 0.5;
+}

@@ -1,0 +1,40 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+.accountBarItem {
+  display: inline-flex;
+  width: min-content;
+  margin: 4px 4px;
+  padding: 0 4px;
+  flex-grow: 1;
+  border-right: solid lightgrey 1px;
+  color: black;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    display: inline-flex;
+  }
+
+  @include media-breakpoint-down(lg) {
+    flex-wrap: wrap;
+    width: 100%;
+    border-bottom: solid lightgrey 1px;
+    border-right: none;
+    margin: 0;
+    padding: 4px;
+  }
+
+  &:last-child {
+    border-right: none;
+  }
+
+  :global(.field) {
+    font-family: "Iceberg";
+  }
+
+  :global(.btn) {
+    margin-left: 10px;
+  }
+}

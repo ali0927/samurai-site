@@ -1,0 +1,36 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+.samurais {
+  border: none;
+  height: 100%;
+  min-height: 500px;
+  max-height: 800px;
+
+  @include media-breakpoint-down(lg) {
+    max-height: 500px;
+  }
+
+  .header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+  }
+  .body {
+    overflow-y: auto;
+
+    .list {
+      overflow-y: auto;
+    }
+
+    &.noSamurais {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: grey;
+      text-align: center;
+      margin: auto;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+.familyTabGroup {
+  color: black;
+  padding: 0px 10px;
+  border: none;
+  height: 60%;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-bottom: 30px;
+  min-height: 500px;
+}
