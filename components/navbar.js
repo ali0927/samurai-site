@@ -101,7 +101,7 @@ export default function CustomNavbar() {
             >
               WHITEPAPER
             </Nav.Link>
-            <Link href="/stake" passHref>
+            <Link href="/claim" passHref>
               <Nav.Link className={styles.navLink}>CLAIMING</Nav.Link>
             </Link>
             {iconNavs.map((props, i) => (
