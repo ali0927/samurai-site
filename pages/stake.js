@@ -1,31 +1,29 @@
-import styles from "../styles/Stake.module.scss";
-import { useState, useMemo } from "react";
-
-import Head from "next/head";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Toasts from "../components/toasts";
-
-import Hero from "../components/hero";
-import HomeNav from "../components/homeNav";
-import AccountBar from "../components/stake/AccountBar";
-import SamuraiList from "../components/stake/SamuraiList";
-import FamilyTabs from "../components/stake/FamilyTabs";
-
 import {
   ActiveFamilyContext,
   BuildingFamilyContext,
-  StakedFamiliesContext,
-  WalletAddressContext,
-  SamuraisContext,
-  TokenIdsContext,
   NewFamiliesContext,
+  SamuraisContext,
+  StakedFamiliesContext,
   ToastsContext,
+  TokenIdsContext,
+  WalletAddressContext,
 } from "../hooks/stakeState";
-import useStake from "../hooks/useStake";
-import update from "immutability-helper";
+import { useMemo, useState } from "react";
+
+import AccountBar from "../components/stake/AccountBar";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 import FamilyList from "../components/stake/FamilyList";
+import FamilyTabs from "../components/stake/FamilyTabs";
+import Head from "next/head";
+import Hero from "../components/hero";
+import HomeNav from "../components/homeNav";
+import Row from "react-bootstrap/Row";
+import SamuraiList from "../components/stake/SamuraiList";
+import Toasts from "../components/toasts";
+import styles from "../styles/Stake.module.scss";
+import update from "immutability-helper";
+import useStake from "../hooks/useStake";
 
 export default function Stake() {
   const [activeFamily, setActiveFamily] = useState(null);
@@ -40,6 +38,7 @@ export default function Stake() {
     medallions,
     totalReward,
     claimAll,
+    claimAllV2,
     stakeFamilies,
     unstakeFamilies,
     chain,
@@ -126,7 +125,7 @@ export default function Stake() {
                             <Col>
                               <AccountBar
                                 connectWallet={connectWallet}
-                                claimAll={claimAll}
+                                claimAll={claimAllV2}
                                 medallions={medallions}
                                 totalReward={totalReward}
                               />
@@ -136,21 +135,7 @@ export default function Stake() {
                             <NewFamiliesContext.Provider
                               value={[newFamilies, setNewFamilies]}
                             >
-                              <Col lg={4} className={styles.playgroundCol}>
-                                <SamuraiList />
-                              </Col>
-                              <Col lg={8} className={styles.playgroundCol}>
-                                <StakedFamiliesContext.Provider
-                                  value={families}
-                                >
-                                  <FamilyTabs />
-                                  <FamilyList
-                                    changeActiveFamily={setActiveFamily}
-                                    stakeFamilies={stakeFamilies}
-                                    unstakeFamilies={unstakeFamilies}
-                                  />
-                                </StakedFamiliesContext.Provider>
-                              </Col>
+                              <SamuraiList />
                             </NewFamiliesContext.Provider>
                           </Row>
                         </>

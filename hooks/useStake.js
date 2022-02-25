@@ -1,18 +1,18 @@
-import { useMemo, useEffect, useState, useCallback } from "react";
-import useMetaMask from "./useMetamask";
-import useWallet from "./useWallet";
-import { ethers } from "ethers";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
 import ShogunNFTABI from "../contracts/ShogunNFT.json";
 import ShogunStakingABI from "../contracts/ShogunStaking.json";
+import { ethers } from "ethers";
 import { getTokenMetadata } from "../utils";
+import useMetaMask from "./useMetamask";
+import useWallet from "./useWallet";
 
 const SHOGUN_NFT_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_NFT_ADDRESS;
 const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
 const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
 
 export default function useStake(onError, onInfo, onSuccess) {
-  const [provider, chain, signer, address, connectWallet] =
-    useWallet(onError);
+  const [provider, chain, signer, address, connectWallet] = useWallet(onError);
 
   const shogunNFT = useMemo(() => {
     if (provider) {
@@ -74,6 +74,14 @@ export default function useStake(onError, onInfo, onSuccess) {
     [stake]
   );
 
+  const getRewardForFamilyV2 = useCallback(
+    async (familyId) => {
+      const rewards = await stake.calculateRewardsMultiV2(familyId);
+      return rewards;
+    },
+    [stake]
+  );
+
   const [totalReward, setTotalReward] = useState("0.00");
 
   const updateTotalRewards = useCallback(async () => {
@@ -93,15 +101,28 @@ export default function useStake(onError, onInfo, onSuccess) {
     }
   }, [stake, families]);
 
+  const updateTotalRewardsV2 = useCallback(async () => {
+    console.log("🚀 | tokenIds", tokenIds);
+    if (stake && tokenIds.length > 0) {
+      const rewards = await stake.calculateRewardsMultiV2(tokenIds);
+
+      const _totalRewardEther = ethers.utils.formatEther(rewards);
+      const _totalRewardTrimmed = parseFloat(_totalRewardEther).toFixed(2);
+      console.log(tokenIds);
+      console.log(`Rewards: ${_totalRewardTrimmed}`);
+      await setTotalReward(_totalRewardTrimmed);
+    }
+  }, [stake, tokenIds]);
+
   useEffect(() => {
-    updateTotalRewards();
+    updateTotalRewardsV2();
     if (provider) {
-      provider.on("block", updateTotalRewards);
+      provider.on("block", updateTotalRewardsV2);
       return () => {
         provider.removeAllListeners("block");
       };
     }
-  }, [provider, updateTotalRewards]);
+  }, [provider, updateTotalRewardsV2]);
 
   const updateUserBalance = useCallback(async () => {
     if (address) {
@@ -277,6 +298,40 @@ export default function useStake(onError, onInfo, onSuccess) {
     }
   }, [stake, signer]);
 
+  const claimAllV2 = useCallback(async () => {
+    if (stake && signer) {
+      await stake
+        .connect(signer)
+        .estimateGas.claimRewardsMultiV2(tokenIds)
+        .then((estimatedGas) => {
+          const gasLimit = estimatedGas.mul(11).div(10);
+          return stake.connect(signer).claimAllRewards({ gasLimit });
+        })
+        .then((txResponse) => {
+          onInfo({
+            title: "Claiming Rewards...",
+            message: "Transaction has been sent. View on etherscan:",
+            links: [`https://etherscan.io/tx/${txResponse.hash}`],
+          });
+          return txResponse.wait();
+        })
+        .then((txReceipt) => {
+          onSuccess({
+            title: "Rewards Claimed",
+            message: `All rewards have been claimed. View on etherscan:`,
+            links: [`https://etherscan.io/tx/${txReceipt.transactionHash}`],
+          });
+        })
+        .catch((reason) => {
+          console.log(reason);
+          onError({
+            title: "Claiming Rewards Failed",
+            message: "Please try again.",
+          });
+        });
+    }
+  }, [stake, signer]);
+
   // fetching samurai metadata
   useEffect(() => {
     (async function () {
@@ -328,7 +383,9 @@ export default function useStake(onError, onInfo, onSuccess) {
     families,
     medallions,
     totalReward,
+    // totalRewardV2,
     claimAll,
+    claimAllV2,
     stakeFamilies,
     unstakeFamilies,
     chain,
