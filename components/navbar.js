@@ -1,17 +1,17 @@
-import Link from "next/link";
-import React from "react";
-import useScrollPosition from "@react-hook/window-scroll";
-import ScrollSpy from "../vendor/react-scrollspy-main/src/ScrollSpy";
-import { Navbar, Nav } from "react-bootstrap";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-
-import styles from "../styles/Navbar.module.css";
 import {
-  OPENSEA_URL,
   DISCORD_URL,
+  OPENSEA_URL,
   TWITTER_URL,
   WHITEPAPER_URL,
 } from "../constants";
+import { Nav, Navbar } from "react-bootstrap";
+
+import Link from "next/link";
+import React from "react";
+import ScrollSpy from "../vendor/react-scrollspy-main/src/ScrollSpy";
+import styles from "../styles/Navbar.module.css";
+import useScrollPosition from "@react-hook/window-scroll";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const navItems = [
   {
@@ -102,7 +102,7 @@ export default function CustomNavbar() {
               WHITEPAPER
             </Nav.Link>
             <Link href="/stake" passHref>
-              <Nav.Link className={styles.navLink}>STAKING</Nav.Link>
+              <Nav.Link className={styles.navLink}>CLAIMING</Nav.Link>
             </Link>
             {iconNavs.map((props, i) => (
               <IconNavLink
@@ -120,7 +120,7 @@ export default function CustomNavbar() {
               {isCollapsedNavbar() ? (
                 "MINTABLE"
               ) : (
-                <img src="/mintable.svg" style={{height:"1.5rem"}}/>
+                <img src="/mintable.svg" style={{ height: "1.5rem" }} />
               )}
             </Nav.Link>
           </Nav>

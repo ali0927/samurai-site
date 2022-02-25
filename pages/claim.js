@@ -25,7 +25,7 @@ import styles from "../styles/Stake.module.scss";
 import update from "immutability-helper";
 import useStake from "../hooks/useStake";
 
-export default function Stake() {
+export default function Claim() {
   const [activeFamily, setActiveFamily] = useState(null);
   const [toastState, setToastState] = useState(new Map());
   const [newFamilies, setNewFamilies] = useState({});
@@ -76,14 +76,17 @@ export default function Stake() {
   return (
     <div className={styles.stake}>
       <Head>
-        <title>Stake | Shogun S侍murais</title>
+        <title>Claim | Shogun S侍murais</title>
         <meta
           name="description"
           content="8,888 Samurais sharpening their swords for battle"
         />
-        <meta property="og:title" content="Stake | Shogun S侍murais" />
+        <meta property="og:title" content="Claim | Shogun S侍murais" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://www.shogunsamurais.com/stake" />
+        <meta
+          property="og:url"
+          content="http://www.shogunsamurais.com/claiming"
+        />
         <meta
           property="og:image"
           content="http://www.shogunsamurais.com/banner-preview.png?1"
