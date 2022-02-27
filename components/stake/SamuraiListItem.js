@@ -1,22 +1,25 @@
-import styles from "../../styles/stake/SamuraiListItem.module.scss";
-
-import { useContext } from "react";
 import {
   ActiveFamilyContext,
   BuildingFamilyContext,
-  ToastsContext,
   NEW_FAMILY_KEY,
+  ToastsContext,
 } from "../../hooks/stakeState";
 
-import ListGroup from "react-bootstrap/ListGroup";
-import Image from "react-bootstrap/Image";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
-
+import Image from "react-bootstrap/Image";
+import ListGroup from "react-bootstrap/ListGroup";
 import { getSamuraiAttribute } from "../../utils";
+import styles from "../../styles/stake/SamuraiListItem.module.scss";
+import { useContext } from "react";
 
 export default function SamuraiListItem({ samurai }) {
-  const { tokenId, name, image } = samurai;
+  let { tokenId, name, image } = samurai;
+  image = image.replace(
+    "https://shogunsamurais.com/cdn-cgi/image/width=500,quality=100/",
+    ""
+  );
+  console.log("🚀 | SamuraiListItem | samurai", samurai);
   const guild = getSamuraiAttribute(samurai, "guild");
   const guildColor = getSamuraiAttribute(samurai, "bg");
 
