@@ -305,7 +305,7 @@ export default function useStake(onError, onInfo, onSuccess) {
         .estimateGas.claimRewardsMultiV2(tokenIds)
         .then((estimatedGas) => {
           const gasLimit = estimatedGas.mul(11).div(10);
-          return stake.connect(signer).claimAllRewards({ gasLimit });
+          return stake.connect(signer).claimRewardsMultiV2({ gasLimit });
         })
         .then((txResponse) => {
           onInfo({

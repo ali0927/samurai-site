@@ -423,13 +423,7 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "tokenIds",
-          "type": "uint256[]"
-        }
-      ],
+      "inputs": [],
       "name": "claimRewardsMultiV2",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -684,6 +678,25 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "familyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getOwnerOfFamily",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes32",
           "name": "role",
           "type": "bytes32"
@@ -695,6 +708,25 @@
           "internalType": "bytes32",
           "name": "",
           "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "familyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getShogunsOfFamily",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
       ],
       "stateMutability": "view",
@@ -1199,6 +1231,19 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "shogunIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "unlockShogunNFTs",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
