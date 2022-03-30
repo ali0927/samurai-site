@@ -10,4 +10,12 @@ module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    ADMIN_PRIVATEKEY: process.env.ADMIN_PRIVATEKEY,
+  },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    staticFolder: '/static',
+  },
 };
