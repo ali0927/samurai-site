@@ -1,13 +1,8 @@
 import axios from "axios";
+import { Test } from "./test";
 
 export const resolvers = {
   Query: {
-    test: async () => {
-      try {
-        return "Hello!"
-      } catch (error) {
-        throw error;
-      }
-    }
+    test: Test
   }
 };

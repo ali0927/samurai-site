@@ -34,13 +34,9 @@ export default function Claim() {
   const {
     samurais,
     tokenIds,
-    families,
     medallions,
     totalReward,
-    claimAll,
     claimAllV2,
-    stakeFamilies,
-    unstakeFamilies,
     chain,
     address,
     connectWallet,

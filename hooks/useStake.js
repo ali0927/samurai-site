@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import ShogunNFTABI from "../contracts/ShogunNFT.json";
-import ShogunStakingABI from "../contracts/ShogunStaking.json";
+import ShogunStakingABI from "../contracts/ShogunStakingPolygon.json";
 import { ethers } from "ethers";
 import { getTokenMetadata } from "../utils";
 import useMetaMask from "./useMetamask";
@@ -10,19 +10,22 @@ import useWallet from "./useWallet";
 const SHOGUN_NFT_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_NFT_ADDRESS;
 const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
 const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
+const INFURA_KEY = process.env.NEXT_PUBLIC_INFURA_KEY
+const ethereumProvider = new ethers.providers.JsonRpcProvider(`https://rinkeby.infura.io/v3/${INFURA_KEY}`);
 
 export default function useStake(onError, onInfo, onSuccess) {
   const [provider, chain, signer, address, connectWallet] = useWallet(onError);
 
   const shogunNFT = useMemo(() => {
-    if (provider) {
+    if (ethereumProvider) {
       return new ethers.Contract(
         SHOGUN_NFT_ADDRESS,
         ShogunNFTABI.abi,
-        provider
+        ethereumProvider
       );
     }
-  }, [provider]);
+  }, [ethereumProvider]);
+  
   const stake = useMemo(() => {
     if (provider) {
       return new ethers.Contract(STAKE_ADDRESS, ShogunStakingABI.abi, provider);
@@ -36,6 +39,7 @@ export default function useStake(onError, onInfo, onSuccess) {
   // families that are already staked
   const [families, setFamilies] = useState({});
   const [medallions, setMedallions] = useState(0);
+
   const unstakedTokenIds = useMemo(() => {
     const stakedSamuraiIds = new Set(
       Object.values(families)
@@ -56,6 +60,7 @@ export default function useStake(onError, onInfo, onSuccess) {
   }, [shogunNFT, address]);
 
   const familyFilter = useMemo(() => {
+    return [];
     if (stake && address) {
       const filterStart = stake.filters.TrainingStarted(address);
       const filterEnd = stake.filters.TrainingEnded(address);
@@ -85,44 +90,24 @@ export default function useStake(onError, onInfo, onSuccess) {
   const [totalReward, setTotalReward] = useState("0.00");
 
   const updateTotalRewards = useCallback(async () => {
-    if (stake && families) {
-      const rewards = await Promise.all(
-        Object.keys(families).map(getRewardForFamily)
-      );
-      const _totalReward = rewards.reduce(
-        (acc, cur) => acc.add(cur),
-        ethers.constants.Zero
-      );
-      const _totalRewardEther = ethers.utils.formatEther(_totalReward);
-      const _totalRewardTrimmed = parseFloat(_totalRewardEther).toFixed(2);
-      console.log(families);
-      console.log(`Rewards: ${_totalRewardTrimmed}`);
-      await setTotalReward(_totalRewardTrimmed);
-    }
-  }, [stake, families]);
-
-  const updateTotalRewardsV2 = useCallback(async () => {
     console.log("🚀 | tokenIds", tokenIds);
     if (stake && tokenIds.length > 0) {
-      const rewards = await stake.calculateRewardsMultiV2(tokenIds);
-
+      const rewards = await stake.calculateRewards([1,2]);
       const _totalRewardEther = ethers.utils.formatEther(rewards);
       const _totalRewardTrimmed = parseFloat(_totalRewardEther).toFixed(2);
-      console.log(tokenIds);
-      console.log(`Rewards: ${_totalRewardTrimmed}`);
       await setTotalReward(_totalRewardTrimmed);
     }
   }, [stake, tokenIds]);
 
   useEffect(() => {
-    updateTotalRewardsV2();
+    updateTotalRewards();
     if (provider) {
-      provider.on("block", updateTotalRewardsV2);
+      provider.on("block", updateTotalRewards);
       return () => {
         provider.removeAllListeners("block");
       };
     }
-  }, [provider, updateTotalRewardsV2]);
+  }, [provider, updateTotalRewards]);
 
   const updateUserBalance = useCallback(async () => {
     if (address) {
@@ -132,39 +117,39 @@ export default function useStake(onError, onInfo, onSuccess) {
 
   const updateUserFamilies = useCallback(async () => {
     if (address && stake) {
-      const familyIds = await stake.getUserFamilies(address);
-      const _families = await Promise.all(
-        familyIds.map(async (familyId) => {
-          const {
-            familyOwner,
-            lastClaim,
-            guildMultiplier,
-            medallionMultiplier,
-            shogunBonus,
-            shogunIds,
-            trainState,
-          } = await stake.getFamily(familyId);
-          if (trainState === 1) {
-            return;
-          }
-          const familySamurais = await Promise.all(
-            shogunIds.map((id) => getTokenMetadata(id.toNumber()))
-          );
-          return [
-            familyId,
-            {
-              familyOwner,
-              lastClaim,
-              guildMultiplier,
-              medallionMultiplier,
-              shogunBonus,
-              samurais: familySamurais,
-              trainState,
-            },
-          ];
-        })
-      );
-      setFamilies(Object.fromEntries(_families.filter((f) => !!f)));
+      // const familyIds = await stake.getUserFamilies(address);
+      // const _families = await Promise.all(
+      //   familyIds.map(async (familyId) => {
+      //     const {
+      //       familyOwner,
+      //       lastClaim,
+      //       guildMultiplier,
+      //       medallionMultiplier,
+      //       shogunBonus,
+      //       shogunIds,
+      //       trainState,
+      //     } = await stake.getFamily(familyId);
+      //     if (trainState === 1) {
+      //       return;
+      //     }
+      //     const familySamurais = await Promise.all(
+      //       shogunIds.map((id) => getTokenMetadata(id.toNumber()))
+      //     );
+      //     return [
+      //       familyId,
+      //       {
+      //         familyOwner,
+      //         lastClaim,
+      //         guildMultiplier,
+      //         medallionMultiplier,
+      //         shogunBonus,
+      //         samurais: familySamurais,
+      //         trainState,
+      //       },
+      //     ];
+      //   })
+      // );
+      // setFamilies(Object.fromEntries(_families.filter((f) => !!f)));
     }
   }, [stake, address]);
 
@@ -355,7 +340,7 @@ export default function useStake(onError, onInfo, onSuccess) {
         stake.on(filter, updateUserFamilies);
       });
       // fetching medallion count
-      stake.medallionCount(address).then((n) => setMedallions(n.toNumber()));
+      // stake.medallionCount(address).then((n) => setMedallions(n.toNumber()));
       return () => {
         stake.removeAllListeners();
       };
@@ -383,9 +368,7 @@ export default function useStake(onError, onInfo, onSuccess) {
     families,
     medallions,
     totalReward,
-    // totalRewardV2,
     claimAll,
-    claimAllV2,
     stakeFamilies,
     unstakeFamilies,
     chain,
