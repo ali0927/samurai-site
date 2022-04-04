@@ -23,7 +23,7 @@ import Toasts from "../components/toasts";
 import styles from "../styles/Stake.module.scss";
 import update from "immutability-helper";
 import useStake from "../hooks/useStake";
-import { gql, useApolloClient } from "@apollo/client";
+
 import { ethers } from "ethers";
 
 export default function Claim() {
@@ -31,13 +31,12 @@ export default function Claim() {
   const [toastState, setToastState] = useState(new Map());
   const [newFamilies, setNewFamilies] = useState({});
   const [buildingFamily, setBuildingFamily] = useState([]);
-  const { mutate } = useApolloClient();
   const {
     samurais,
     tokenIds,
     medallions,
     totalReward,
-    claimAllV2,
+    claimRewards,
     chain,
     address,
     connectWallet,
@@ -69,18 +68,6 @@ export default function Claim() {
       })
     );
   };
-
-  const claimRewards = async () => {
-    const res = await mutate({
-      mutation: gql`
-        mutation($address: String!, $tokenIds: [Int]!) {
-          claim(address: $address, tokenIds: $tokenIds)
-        }
-      `,
-      variables: { address: address, tokenIds: tokenIds.map(_id => _id.toNumber()) },
-    });
-    console.log(res.data);
-  }
 
   return (
     <div className={styles.stake}>

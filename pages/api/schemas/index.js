@@ -5,6 +5,6 @@ export  const  typeDefs  =  gql`
     test: String!
   }
   type Mutation {
-    claim(address: String!, tokenIds: [Int]!): String!
+    claim(requestId: String!): String!
   }
 `
