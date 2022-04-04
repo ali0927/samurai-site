@@ -1,10 +1,12 @@
 import "../styles/globals.scss";
 import LoadedContext from "../hooks/loadedContext";
 import { useState, useEffect } from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3000/api/graphql',
+  uri: `${serverUrl}/api/graphql`,
   cache: new InMemoryCache(),
 })
 

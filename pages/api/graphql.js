@@ -2,6 +2,11 @@ import { gql, ApolloServer } from "apollo-server-micro"
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core"
 import { typeDefs } from "./schemas";
 import { resolvers } from "./resolvers";
+import Cors from "micro-cors";
+
+const cors = Cors({
+  allowMethods: ["GET", "POST", "OPTIONS"]
+});
 
 const apolloServer = new ApolloServer({
   typeDefs,
@@ -12,7 +17,7 @@ const apolloServer = new ApolloServer({
 
 const startServer = apolloServer.start();
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
 
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
@@ -43,3 +48,5 @@ export const config = {
     bodyParser: false,
   },
 };
+
+export default cors(handler);

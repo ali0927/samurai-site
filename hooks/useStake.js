@@ -339,6 +339,12 @@ export default function useStake(onError, onInfo, onSuccess) {
         `,
         variables: { requestId: submitRequestEvent.args.requestId },
       });
+
+      const rewards = await stake.calculateRewards(tokenIds);
+      const _totalRewardEther = ethers.utils.formatEther(rewards);
+      const _totalRewardTrimmed = parseFloat(_totalRewardEther).toFixed(2);
+      await setTotalReward(_totalRewardTrimmed);
+
       onSuccess({
         title: 'Claimed',
         message: res.data.claim
