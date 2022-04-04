@@ -11,12 +11,13 @@ const MOCKSHO_ADDRESS = process.env.NEXT_PUBLIC_MOCKSHO_ADDRESS;
 
 export const Claim = async (_, args) => {
   const { requestId } = args;
-  const { serverRuntimeConfig } = getConfig();
+  const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+
   const plygonProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_MUMBAI_RPC);
   const ethereumProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_RINKEBY_RPC);
   const options = { gasLimit: 5000000 };
 
-  const adminPolygonWallet = new Wallet(serverRuntimeConfig.ADMIN_PRIVATEKEY, plygonProvider);
+  const adminPolygonWallet = new Wallet(process.env.NEXT_PUBLIC_ADMIN_PRIVATEKEY, plygonProvider);
   const stake = new ethers.Contract(STAKE_ADDRESS, ShogunStakingABI.abi, plygonProvider);
 
   // const shogunNFT = new ethers.Contract(SHOGUN_NFT_ADDRESS, ShogunNFTABI.abi, ethereumProvider);

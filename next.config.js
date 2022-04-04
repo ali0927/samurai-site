@@ -12,10 +12,10 @@ module.exports = {
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
-    ADMIN_PRIVATEKEY: process.env.ADMIN_PRIVATEKEY,
+    ADMIN_PRIVATEKEY: process.env.NEXT_PUBLIC_ADMIN_PRIVATEKEY,
   },
   publicRuntimeConfig: {
     // Will be available on both server and client
-    staticFolder: '/static',
+    ADMIN_PRIVATEKEY: process.env.NEXT_PUBLIC_ADMIN_PRIVATEKEY,
   },
 };
