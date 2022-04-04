@@ -9,7 +9,6 @@ import {
   WalletAddressContext,
 } from "../hooks/stakeState";
 import { useMemo, useState } from "react";
-
 import AccountBar from "../components/stake/AccountBar";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -25,22 +24,19 @@ import styles from "../styles/Stake.module.scss";
 import update from "immutability-helper";
 import useStake from "../hooks/useStake";
 
+import { ethers } from "ethers";
+
 export default function Claim() {
   const [activeFamily, setActiveFamily] = useState(null);
   const [toastState, setToastState] = useState(new Map());
   const [newFamilies, setNewFamilies] = useState({});
   const [buildingFamily, setBuildingFamily] = useState([]);
-
   const {
     samurais,
     tokenIds,
-    families,
     medallions,
     totalReward,
-    claimAll,
-    claimAllV2,
-    stakeFamilies,
-    unstakeFamilies,
+    claimRewards,
     chain,
     address,
     connectWallet,
@@ -128,7 +124,7 @@ export default function Claim() {
                             <Col>
                               <AccountBar
                                 connectWallet={connectWallet}
-                                claimAll={claimAllV2}
+                                claimAll={claimRewards}
                                 medallions={medallions}
                                 totalReward={totalReward}
                               />
