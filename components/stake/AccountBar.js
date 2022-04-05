@@ -15,6 +15,7 @@ export default function AccountBar({
   claimAll,
   totalReward,
   medallions,
+  balance
 }) {
   const address = useContext(WalletAddressContext);
 
@@ -46,6 +47,9 @@ export default function AccountBar({
         <Image height={40} width={33} src="/stake/medallion.png" />
         &nbsp;
         <div>x{medallions}</div>
+      </AccountBarItem>
+      <AccountBarItem>
+        <div>{balance} SS</div>
       </AccountBarItem>
     </Card>
   );

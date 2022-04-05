@@ -36,6 +36,7 @@ export default function Claim() {
     tokenIds,
     medallions,
     totalReward,
+    balanceSho,
     claimRewards,
     chain,
     address,
@@ -127,6 +128,7 @@ export default function Claim() {
                                 claimAll={claimRewards}
                                 medallions={medallions}
                                 totalReward={totalReward}
+                                balance={balanceSho}
                               />
                             </Col>
                           </Row>

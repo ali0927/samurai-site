@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import ShogunNFTABI from "../contracts/ShogunNFT.json";
 import ShogunStakingABI from "../contracts/ShogunStakingPolygon.json";
+import MockShoABI from "../contracts/MockSho.json";
 import { ethers } from "ethers";
 import { getTokenMetadata } from "../utils";
 import useMetaMask from "./useMetamask";
@@ -10,12 +11,23 @@ import { gql, useApolloClient } from "@apollo/client";
 
 const SHOGUN_NFT_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_NFT_ADDRESS;
 const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
+const MOCKSHO_ADDRESS = process.env.NEXT_PUBLIC_MOCKSHO_ADDRESS;
+
 const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
 const ethereumProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_RINKEBY_RPC);
 
 export default function useStake(onError, onInfo, onSuccess) {
   const [provider, chain, signer, address, connectWallet] = useWallet(onError);
   const { mutate } = useApolloClient();
+  // user's wallet
+  const [tokenIds, setTokenIds] = useState([]);
+  // samurais available for staking
+  const [samurais, setSamurais] = useState([]);
+  // families that are already staked
+  const [families, setFamilies] = useState({});
+  const [medallions, setMedallions] = useState(0);
+  const [totalReward, setTotalReward] = useState("0.00");
+  const [balanceSho, setBalanceSho] = useState("0.00");
 
   const shogunNFT = useMemo(() => {
     if (ethereumProvider) {
@@ -34,13 +46,24 @@ export default function useStake(onError, onInfo, onSuccess) {
     }
   }, [provider]);
 
-  // user's wallet
-  const [tokenIds, setTokenIds] = useState([]);
-  // samurais available for staking
-  const [samurais, setSamurais] = useState([]);
-  // families that are already staked
-  const [families, setFamilies] = useState({});
-  const [medallions, setMedallions] = useState(0);
+  const mockSho = useMemo(() => {
+    if (provider) {
+      const signer = provider.getSigner(0);
+      return new ethers.Contract(MOCKSHO_ADDRESS, MockShoABI.abi, signer);
+    }
+  }, [provider]);
+
+  useEffect(() => {
+    getBalanceSho();
+  }, [address, mockSho, totalReward])
+
+  const getBalanceSho = async () => {
+    if (address && mockSho) {
+      let balance = await mockSho.balanceOf(address);
+      balance = ethers.utils.formatEther(balance);
+      return setBalanceSho(parseFloat(balance).toFixed(2));
+    }
+  }
 
   const unstakedTokenIds = useMemo(() => {
     const stakedSamuraiIds = new Set(
@@ -88,8 +111,6 @@ export default function useStake(onError, onInfo, onSuccess) {
     },
     [stake]
   );
-
-  const [totalReward, setTotalReward] = useState("0.00");
 
   const updateTotalRewards = useCallback(async () => {
     console.log("🚀 | tokenIds", tokenIds);
@@ -321,13 +342,13 @@ export default function useStake(onError, onInfo, onSuccess) {
 
   const claimRewards = useCallback(async () => {
     const options = { gasLimit: 500000 };
-    const _tokenIds = tokenIds.slice(0, 5);
-    console.log(_tokenIds);
     const tx = await stake.claimRewards(tokenIds, options);
     const rc = await tx.wait();
     const submitRequestEvent = rc.events.find(e => e.event === 'SubmitRequest');
 
-    const userTokenIds = tokenIds.map(_id => _id.toNumber());
+    const userTokenIds = tokenIds.map(_id => _id.toNumber()); // from ShogunNFT
+
+    //check token ids with ShogunStaking
     const checkTokenIds = submitRequestEvent.args.tokenIds.every(_id => userTokenIds.includes(_id.toNumber()));
 
     if (checkTokenIds) {
@@ -403,6 +424,7 @@ export default function useStake(onError, onInfo, onSuccess) {
     families,
     medallions,
     totalReward,
+    balanceSho,
     claimRewards,
     claimAll,
     stakeFamilies,
