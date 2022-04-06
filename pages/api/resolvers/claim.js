@@ -37,6 +37,7 @@ export const Claim = async (_, args) => {
   const tx = await stake.connect(adminPolygonWallet).confirmRequest(requestId, options);
   const rc = await tx.wait();
   const claimEvent = rc.events.find(e => e.event === 'Claim');
-  const amount = claimEvent.args.amount;
-  return `${amount}SHO caimed successful`;
+  const amount = ethers.utils.formatEther(claimEvent.args.amount);
+  const _amount = parseFloat(amount).toFixed(2);
+  return `${_amount}SHO caimed successful`;
 }
