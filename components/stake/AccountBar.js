@@ -49,7 +49,7 @@ export default function AccountBar({
         <div>x{medallions}</div>
       </AccountBarItem>
       <AccountBarItem>
-        <div>{balance} SS</div>
+        <div>{balance} $SHO</div>
       </AccountBarItem>
     </Card>
   );
