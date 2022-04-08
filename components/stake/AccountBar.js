@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import styles from "../../styles/stake/AccountBar.module.scss";
 import { useContext } from "react";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
+import Spinner from "react-bootstrap/Spinner";
 
 import AccountBarItem from "./AccountBarItem";
 
@@ -18,6 +20,12 @@ export default function AccountBar({
   balance
 }) {
   const address = useContext(WalletAddressContext);
+  const [pending, setPending] = useState(false);
+  const claim = async () => {
+    setPending(true);
+    await claimAll();
+    setPending(false);
+  }
 
   return (
     <Card className={styles.accountBar}>
@@ -39,8 +47,11 @@ export default function AccountBar({
         &nbsp;
         <div className="field">Unclaimed Balance:</div>
         <div>{totalReward}&nbsp;$SHO</div>
-        <Button variant="dark" onClick={claimAll}>
-          Claim
+        <Button variant="dark" onClick={claim} className={styles.accountBarButton} style={{height: "32px", width: "80px"}} disabled={pending}>
+          {pending ?
+            <Spinner animation="border" variant="light" size="sm" /> :
+            <span>Claim</span>
+          }
         </Button>
       </AccountBarItem>
       <AccountBarItem>

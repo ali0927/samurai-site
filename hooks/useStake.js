@@ -341,36 +341,44 @@ export default function useStake(onError, onInfo, onSuccess) {
   }, [stake, signer]);
 
   const claimRewards = useCallback(async () => {
-    const options = { gasLimit: 500000 };
-    const tx = await stake.claimRewards(tokenIds, options);
-    const rc = await tx.wait();
-    const submitRequestEvent = rc.events.find(e => e.event === 'SubmitRequest');
+    try {
+      const options = { gasLimit: 500000 };
+      const tx = await stake.claimRewards(tokenIds, options);
+      const rc = await tx.wait();
+      const submitRequestEvent = rc.events.find(e => e.event === 'SubmitRequest');
 
-    const userTokenIds = tokenIds.map(_id => _id.toNumber()); // from ShogunNFT
+      const userTokenIds = tokenIds.map(_id => _id.toNumber()); // from ShogunNFT
 
-    //check token ids with ShogunStaking
-    const checkTokenIds = submitRequestEvent.args.tokenIds.every(_id => userTokenIds.includes(_id.toNumber()));
+      //check token ids with ShogunStaking
+      const checkTokenIds = submitRequestEvent.args.tokenIds.every(_id => userTokenIds.includes(_id.toNumber()));
 
-    if (checkTokenIds) {
-      const res = await mutate({
-        mutation: gql`
-          mutation($requestId: String!) {
-            claim(requestId: $requestId)
-          }
-        `,
-        variables: { requestId: submitRequestEvent.args.requestId },
-      });
+      if (checkTokenIds) {
+        const res = await mutate({
+          mutation: gql`
+            mutation($requestId: String!) {
+              claim(requestId: $requestId)
+            }
+          `,
+          variables: { requestId: submitRequestEvent.args.requestId },
+        });
 
-      const rewards = await stake.calculateRewards(tokenIds);
-      const _totalRewardEther = ethers.utils.formatEther(rewards);
-      const _totalRewardTrimmed = parseFloat(_totalRewardEther).toFixed(2);
-      await setTotalReward(_totalRewardTrimmed);
+        const rewards = await stake.calculateRewards(tokenIds);
+        const _totalRewardEther = ethers.utils.formatEther(rewards);
+        const _totalRewardTrimmed = parseFloat(_totalRewardEther).toFixed(2);
+        await setTotalReward(_totalRewardTrimmed);
 
-      onSuccess({
-        title: 'Claimed',
-        message: res.data.claim
+        onSuccess({
+          title: 'Claim',
+          message: res.data.claim
+        });
+      }
+    } catch {
+      onError({
+        title: 'Claim',
+        message: `Transaction failed`
       });
     }
+
   }, [stake, signer, tokenIds]);
 
   // fetching samurai metadata
