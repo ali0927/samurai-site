@@ -14,7 +14,7 @@ const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
 const MOCKSHO_ADDRESS = process.env.NEXT_PUBLIC_MOCKSHO_ADDRESS;
 
 const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
-const ethereumProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_RINKEBY_RPC);
+const ethereumProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_ETHEREUM_RPC);
 
 export default function useStake(onError, onInfo, onSuccess) {
   const [provider, chain, signer, address, connectWallet] = useWallet(onError);
