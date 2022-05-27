@@ -15,9 +15,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Environment Variables
 
-NEXT_PUBLIC_SHOGUN_NFT_ADDRESS: Shouun Samurai NFT address (Ehtereum) <br/>
-NEXT_PUBLIC_MOCKSHO_ADDRESS: Mock Sho address (Polygon) <br/>
-NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS: Shogun Staking contract address (Polygon) <br/>
-NEXT_PUBLIC_CHAIN_ID: Polygon Mainnet Chain Id <br/>
-NEXT_PUBLIC_ETHEREUM_RPC: RPC Url (Rinkeby: https://eth-rinkeby.alchemyapi.io/v2/tfzPF19UBpJ6F4Tq_Wl1g4225--D6FFK) <br/>
-NEXT_PUBLIC_POLYGON_RPC: RPC Url (Mumbai: https://polygon-mumbai.g.alchemy.com/v2/KePCpsfV-zRy32WQWDO68J0HKiklb_JJ) <br/>
+NEXT_PUBLIC_ADMIN_PRIVATEKEY: Admin Wallet Private Key <br/>
+NEXT_PUBLIC_NODE_ENV: dev or prod <br/>
+NEXT_PUBLIC_RPC_ETHEREUM: RPC Url (Ethereum: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/eth/mainnet) <br/>
+NEXT_PUBLIC_RPC_RINKEBY: RPC Url (Rinkeby: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/eth/rinkeby) <br/>
+NEXT_PUBLIC_RPC_POLYGON: RPC Url (Polygon: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/polygon/mainnet) <br/>
+NEXT_PUBLIC_RPC_MUMBAI: RPC Url (Mumbai: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/polygon/mumbai) <br/>

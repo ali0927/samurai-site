@@ -2,19 +2,24 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import ShogunNFTABI from "../contracts/ShogunNFT.json";
 import ShogunStakingABI from "../contracts/ShogunStakingPolygon.json";
-import MockShoABI from "../contracts/MockSho.json";
+import SSPolygonABI from "../contracts/SSPolygon.json";
 import { ethers } from "ethers";
 import { getTokenMetadata } from "../utils";
 import useMetaMask from "./useMetamask";
 import useWallet from "./useWallet";
 import { gql, useApolloClient } from "@apollo/client";
 
-const SHOGUN_NFT_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_NFT_ADDRESS;
-const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
-const MOCKSHO_ADDRESS = process.env.NEXT_PUBLIC_MOCKSHO_ADDRESS;
+const CHAINID_ETH = process.env.NEXT_PUBLIC_NODE_ENV === 'prod' ? "1": "4";
+const CHAINID_POLYGON = process.env.NEXT_PUBLIC_NODE_ENV === 'prod' ? "137": "80001";
+const SHOGUN_NFT_ADDRESS = ShogunNFTABI.address[CHAINID_ETH];
+const STAKE_ADDRESS = ShogunStakingABI.address[CHAINID_POLYGON];
+const SSPOLYGON_ADDRESS = SSPolygonABI.address[CHAINID_POLYGON];
 
-const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
-const ethereumProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_ETHEREUM_RPC);
+const ethRPC = 
+  process.env.NEXT_PUBLIC_NODE_ENV === 'prod' ? 
+  process.env.NEXT_PUBLIC_RPC_ETHEREUM: 
+  process.env.NEXT_PUBLIC_RPC_RINKEBY;
+const ethereumProvider = new ethers.providers.JsonRpcProvider(ethRPC);
 
 export default function useStake(onError, onInfo, onSuccess) {
   const [provider, chain, signer, address, connectWallet] = useWallet(onError);
@@ -49,7 +54,7 @@ export default function useStake(onError, onInfo, onSuccess) {
   const mockSho = useMemo(() => {
     if (provider) {
       const signer = provider.getSigner(0);
-      return new ethers.Contract(MOCKSHO_ADDRESS, MockShoABI.abi, signer);
+      return new ethers.Contract(SSPOLYGON_ADDRESS, SSPolygonABI.abi, signer);
     }
   }, [provider]);
 

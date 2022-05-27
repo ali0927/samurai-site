@@ -24,7 +24,7 @@ import styles from "../styles/Stake.module.scss";
 import update from "immutability-helper";
 import useStake from "../hooks/useStake";
 
-import { ethers } from "ethers";
+const CHAINID_POLYGON = process.env.NEXT_PUBLIC_NODE_ENV === 'prod' ? 137: 80001;
 
 export default function Claim() {
   const [activeFamily, setActiveFamily] = useState(null);
@@ -51,7 +51,7 @@ export default function Claim() {
     if (chain === undefined) {
       return true;
     }
-    return chain === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
+    return chain === CHAINID_POLYGON;
   }, [chain]);
 
   const showToast = ({ title, ...contents }) => {

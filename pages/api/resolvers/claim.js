@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
 import { ethers, Wallet } from "ethers";
 import getConfig from 'next/config';
 import ShogunStakingABI from "../../../contracts/ShogunStakingPolygon.json";
-import ShogunNFTABI from "../../../contracts/ShogunNFT.json";
-import MockShoABI from "../../../contracts/MockSho.json";
 
-const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
-const SHOGUN_NFT_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_NFT_ADDRESS;
-const MOCKSHO_ADDRESS = process.env.NEXT_PUBLIC_MOCKSHO_ADDRESS;
+const CHAINID_POLYGON = process.env.NEXT_PUBLIC_NODE_ENV === 'prod' ? "137": "80001";
+const STAKE_ADDRESS = ShogunStakingABI.address[CHAINID_POLYGON];
+
+const polygonRPC = 
+  process.env.NEXT_PUBLIC_NODE_ENV === 'prod' ? 
+  process.env.NEXT_PUBLIC_RPC_POLYGON: 
+  process.env.NEXT_PUBLIC_RPC_MUMBAI;
+const plygonProvider = new ethers.providers.JsonRpcProvider(polygonRPC);
 
 export const Claim = async (_, args) => {
   const { requestId } = args;
   const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
-  const plygonProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_POLYGON_RPC);
-  const ethereumProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_ETHEREUM_RPC);
   const options = { gasLimit: 5000000 };
 
   const adminPolygonWallet = new Wallet(process.env.NEXT_PUBLIC_ADMIN_PRIVATEKEY, plygonProvider);
