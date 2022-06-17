@@ -5,16 +5,15 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 
-import AccountBarItem from "./AccountBarItem";
+import AccountBarItem from "../stake/AccountBarItem";
 
 import { getDisplayAddress } from "../../utils";
 import { WalletAddressContext } from "../../hooks/stakeState";
 
-export default function AccountBar({
+export default function AppBar({
   connectWallet,
-  claimAll,
-  totalReward,
-  medallions,
+  selectAll,
+  allSelected
 }) {
   const address = useContext(WalletAddressContext);
 
@@ -27,25 +26,24 @@ export default function AccountBar({
           <Button
             variant="dark"
             className={styles.accountBarButton}
-            onClick={address ? () => {} : connectWallet}
+            onClick={address ? () => { } : connectWallet}
           >
             Connect Wallet
           </Button>
         )}
       </AccountBarItem>
       <AccountBarItem>
-        <Image height={40} width={40} src="/stake/token.png" />
-        &nbsp;
-        <div className="field">Unclaimed Balance:</div>
-        <div>{totalReward}&nbsp;$SHO</div>
-        <Button variant="dark" onClick={claimAll}>
-          Claim
-        </Button>
+        <div className="field">Burn-to-Mint v2</div>
       </AccountBarItem>
       <AccountBarItem>
-        <Image height={40} width={33} src="/stake/medallion.png" />
-        &nbsp;
-        <div>x{medallions}</div>
+        <Button 
+          variant={allSelected ? "secondary" : "danger"} 
+          className={styles.button}
+          onClick={selectAll} 
+          disabled={allSelected}
+        >
+          {`${allSelected ? 'Selected' : 'Select'} All`}
+        </Button>
       </AccountBarItem>
     </Card>
   );

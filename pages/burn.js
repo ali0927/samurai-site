@@ -10,7 +10,7 @@ import {
 } from "../hooks/stakeState";
 import { useMemo, useState } from "react";
 
-import AccountBar from "../components/stake/AccountBar";
+import AppBar from "../components/burn/AppBar";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import FamilyList from "../components/stake/FamilyList";
@@ -19,17 +19,18 @@ import Head from "next/head";
 import Hero from "../components/hero";
 import HomeNav from "../components/homeNav";
 import Row from "react-bootstrap/Row";
-import SamuraiList from "../components/stake/SamuraiList";
+import BurnSamuraiList from "../components/burn/BurnSamuraiList";
 import Toasts from "../components/toasts";
 import styles from "../styles/Stake.module.scss";
 import update from "immutability-helper";
 import useStake from "../hooks/useStake";
 
-export default function Claim() {
+export default function Burn() {
   const [activeFamily, setActiveFamily] = useState(null);
   const [toastState, setToastState] = useState(new Map());
   const [newFamilies, setNewFamilies] = useState({});
   const [buildingFamily, setBuildingFamily] = useState([]);
+  const [selectedSamurais, setSelectedSamurais] = useState([]);
 
   const {
     samurais,
@@ -57,6 +58,24 @@ export default function Claim() {
     return chain === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID);
   }, [chain]);
 
+  const selectAll = () => {
+    setSelectedSamurais(samurais);
+  }
+
+  const selectSamurai = (samurai) => {
+    setSelectedSamurais([...selectedSamurais, samurai]);
+  }
+
+  const deSelectSamurai = (samurai) => {
+    const res = selectedSamurais.reduce((total, val) => {
+      return val.tokenId === samurai.tokenId
+        ? total
+        : [...total, val]
+    }, []);
+    console.log('res', res)
+    setSelectedSamurais(res);
+  }
+
   const showToast = ({ title, ...contents }) => {
     return setToastState((toastState) =>
       update(toastState, {
@@ -76,16 +95,16 @@ export default function Claim() {
   return (
     <div className={styles.stake}>
       <Head>
-        <title>Claim | Shogun S侍murais</title>
+        <title>Burn | Shogun S侍murais</title>
         <meta
           name="description"
           content="8,888 Samurais sharpening their swords for battle"
         />
-        <meta property="og:title" content="Claim | Shogun S侍murais" />
+        <meta property="og:title" content="Burn | Shogun S侍murais" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content="http://www.shogunsamurais.com/claiming"
+          content="http://www.shogunsamurais.com/burning"
         />
         <meta
           property="og:image"
@@ -126,20 +145,19 @@ export default function Claim() {
                         <>
                           <Row>
                             <Col>
-                              <AccountBar
+                              <AppBar
                                 connectWallet={connectWallet}
-                                claimAll={claimAllV2}
-                                medallions={medallions}
-                                totalReward={totalReward}
+                                selectAll={selectAll}
+                                allSelected={samurais.length <= selectedSamurais.length}
                               />
                             </Col>
                           </Row>
                           <Row className={styles.playground}>
-                            <NewFamiliesContext.Provider
-                              value={[newFamilies, setNewFamilies]}
-                            >
-                              <SamuraiList />
-                            </NewFamiliesContext.Provider>
+                            <BurnSamuraiList 
+                              selectedSamurais={selectedSamurais}
+                              selectSamurai={selectSamurai}
+                              deSelectSamurai={deSelectSamurai}
+                            />
                           </Row>
                         </>
                       )}

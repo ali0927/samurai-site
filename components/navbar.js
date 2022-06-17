@@ -104,6 +104,9 @@ export default function CustomNavbar() {
             <Link href="/claim" passHref>
               <Nav.Link className={styles.navLink}>CLAIMING</Nav.Link>
             </Link>
+            <Link href="/burn" passHref>
+              <Nav.Link className={styles.navLink}>BURNING</Nav.Link>
+            </Link>
             {iconNavs.map((props, i) => (
               <IconNavLink
                 key={i}

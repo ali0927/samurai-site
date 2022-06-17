@@ -13,9 +13,8 @@
     flex-direction: column;
     align-items: center;
   }
-}
-.accountBarButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  .button {
+    width: 168px;
+  }
 }

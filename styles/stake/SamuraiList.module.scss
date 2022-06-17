@@ -16,6 +16,14 @@
     background-color: white;
     display: flex;
     justify-content: space-between;
+    
+    .subtitle {
+      width: 100%;
+      margin: 20px;
+      font-size: large;
+      text-align: center;
+      color: #808080;
+    }
   }
   .body {
     overflow-y: auto;
@@ -31,6 +39,71 @@
       color: grey;
       text-align: center;
       margin: auto;
+    }
+  }
+}
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+.burnSamurais {
+  border: none;
+  height: 100%;
+  min-height: 500px;
+  max-height: 800px;
+
+  @include media-breakpoint-down(lg) {
+    max-height: 500px;
+  }
+
+  .header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    
+    .subtitle {
+      width: 100%;
+      margin: 20px;
+      font-size: large;
+      text-align: center;
+      color: #808080;
+    }
+  }
+  .body {
+    overflow-y: auto;
+    height: 440px;
+    .list {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    &.noSamurais {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: grey;
+      text-align: center;
+      margin: auto;
+    }
+  }
+  .footer {
+    margin: 30px auto;
+    color: black;
+    font-family: 'Work Sans';
+    font-size: large;
+    font-weight: 600;
+    line-height: 23px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    .selectedValue {
+      font-weight: 500;
+    }
+    .submit {
+      width: 168px;
+      margin-top: 10px;
     }
   }
 }

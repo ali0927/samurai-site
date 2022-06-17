@@ -35,3 +35,46 @@
   .button {
   }
 }
+
+.burnSamuraiListItem {
+  min-width: 400px;
+  width: 50%;
+  .header {
+    .image {
+        width: 120px;
+        height: 120px;
+    }
+    .details {
+      flex-grow: 1;
+      justify-content: space-between;
+  
+      .samuraiNumber {
+        font-family: "Iceberg";
+        color: black;
+        display: flex;
+        flex-direction: column;
+        .rarity {
+          font-size: medium;
+        }
+      }
+      .samuraiTier {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-family: 'Work Sans';
+        font-style: normal;
+        .tierTitle {
+          font-weight: 600;
+          font-size: medium;
+        }
+        .tierValue {
+          font-family: "Iceberg";
+          color: #A30000;
+          font-size: larger;
+        }
+      }
+  
+    }
+  }
+}
