@@ -16,8 +16,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Environment Variables
 
 NEXT_PUBLIC_ADMIN_PRIVATEKEY: Admin Wallet Private Key <br/>
-NEXT_PUBLIC_NODE_ENV: dev or prod <br/>
-NEXT_PUBLIC_RPC_ETHEREUM: RPC Url (Ethereum: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/eth/mainnet) <br/>
-NEXT_PUBLIC_RPC_RINKEBY: RPC Url (Rinkeby: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/eth/rinkeby) <br/>
-NEXT_PUBLIC_RPC_POLYGON: RPC Url (Polygon: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/polygon/mainnet) <br/>
-NEXT_PUBLIC_RPC_MUMBAI: RPC Url (Mumbai: https://speedy-nodes-nyc.moralis.io/48b37adbf9b710c2f45339df/polygon/mumbai) <br/>
+NEXT_PUBLIC_CHAIN_ID: 1: Main net or 4: Rinkeby <br/>
