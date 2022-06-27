@@ -7,8 +7,8 @@ import { getTokenMetadata } from "../utils";
 import useMetaMask from "./useMetamask";
 import useWallet from "./useWallet";
 
-const STAKE_ADDRESS = process.env.NEXT_PUBLIC_SHOGUN_STAKING_ADDRESS;
 const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID;
+const STAKE_ADDRESS = ShogunStakingABI.address[CHAIN_ID];
 const SHOGUN_NFT_ADDRESS = ShogunNFTABI.address[CHAIN_ID];
 
 export default function useStake(onError, onInfo, onSuccess) {

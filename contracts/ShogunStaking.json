@@ -1,5 +1,8 @@
 {
-  "address": "0xC4F4811A854b60f7b35c8e46c4f2Ebfdd035bEd1",
+  "address": {
+    "1": "0xC4F4811A854b60f7b35c8e46c4f2Ebfdd035bEd1",
+    "4": "0x28dA7CEF1cf52AE1edFB0343e86319352AC5E9b3"
+  },
   "abi": [
     {
       "anonymous": false,
