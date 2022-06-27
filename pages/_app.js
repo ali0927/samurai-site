@@ -12,11 +12,11 @@ function MyApp({ Component, pageProps }) {
   });
 
   // Only holds serverRuntimeConfig and publicRuntimeConfig
-  const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+  // const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
   // Will only be available on the server-side
-  console.log('ADMIN_PRIVATEKEY-------', serverRuntimeConfig.ADMIN_PRIVATEKEY);
+  // console.log('ADMIN_PRIVATEKEY-------', serverRuntimeConfig.ADMIN_PRIVATEKEY);
   // Will be available on both server-side and client-side
-  console.log('staticFolder-----', publicRuntimeConfig.staticFolder);
+  // console.log('staticFolder-----', publicRuntimeConfig.staticFolder);
 
   function callAPI() {
     axios({
