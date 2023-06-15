@@ -3,6 +3,14 @@ import LoadedContext from "../hooks/loadedContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import getConfig from 'next/config';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
+
+const apolloClient = new ApolloClient({
+  uri: `${serverUrl}/api/graphql`,
+  cache: new InMemoryCache(),
+})
 
 function MyApp({ Component, pageProps }) {
   const [loaded, setLoaded] = useState(false);
@@ -35,9 +43,11 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <LoadedContext.Provider value={loaded}>
-      <Component {...pageProps} />
-    </LoadedContext.Provider>
+    <ApolloProvider client={apolloClient}>
+      <LoadedContext.Provider value={loaded}>
+        <Component {...pageProps} />
+      </LoadedContext.Provider>
+    </ApolloProvider>
   );
 }
 

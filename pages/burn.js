@@ -35,16 +35,10 @@ export default function Burn() {
   const {
     samurais,
     tokenIds,
-    families,
-    medallions,
-    totalReward,
-    claimAll,
-    claimAllV2,
-    stakeFamilies,
-    unstakeFamilies,
     chain,
     address,
     connectWallet,
+    burnSamurais
   } = useStake(
     (message) => showToast({ ...message, bg: "danger" }),
     (message) => showToast({ ...message }),
@@ -157,6 +151,7 @@ export default function Burn() {
                               selectedSamurais={selectedSamurais}
                               selectSamurai={selectSamurai}
                               deSelectSamurai={deSelectSamurai}
+                              burnSamurais={burnSamurais}
                             />
                           </Row>
                         </>

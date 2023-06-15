@@ -1,6 +1,6 @@
 import styles from "../../styles/stake/SamuraiList.module.scss";
 import { useContext, useState, useMemo } from "react";
-
+import { gql, useApolloClient } from "@apollo/client";
 import { 
   Card, 
   ListGroup, 
@@ -17,8 +17,10 @@ import {
 export default function BurnSamuraiList({ 
   selectedSamurais, 
   selectSamurai, 
-  deSelectSamurai 
+  deSelectSamurai,
+  burnSamurais
 }) {
+  const { mutate } = useApolloClient();
   const samurais = useContext(SamuraisContext);
   const selectedIdx = selectedSamurais.reduce((total, samurai) => {
     if (total[samurai.tokenId]) return total;
@@ -54,6 +56,10 @@ export default function BurnSamuraiList({
     res += tiers[3] % 2 + tiers[4] % 3 === 3 ? 1: 0;
     return res;
   }, [tiers]);
+
+  const burn = async () => {
+    await burnSamurais(selectedSamurais.map(s => s.tokenId));
+  }
 
   return (
     <Card className={styles.burnSamurais}>
@@ -101,7 +107,7 @@ export default function BurnSamuraiList({
           <label>Total Mints Available: &nbsp;</label>
           <label className={styles.selectedValue}>{mintsAvailable}</label>
         </div>
-        <Button variant={"danger"} className={styles.submit}>
+        <Button variant={"danger"} className={styles.submit} onClick={burn}>
           Burn
         </Button>
       </div>

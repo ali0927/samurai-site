@@ -1,13 +1,12 @@
 import axios from "axios";
+import { Test } from "./test";
+import { Burn } from "./burn";
 
 export const resolvers = {
   Query: {
-    test: async () => {
-      try {
-        return "Hello!"
-      } catch (error) {
-        throw error;
-      }
-    }
+    test: Test
+  },
+  Mutation: {
+    burn: Burn
   }
 };

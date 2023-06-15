@@ -6,6 +6,7 @@ import { ethers } from "ethers";
 import { getTokenMetadata } from "../utils";
 import useMetaMask from "./useMetamask";
 import useWallet from "./useWallet";
+import { Multicall } from 'ethereum-multicall';
 
 const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID;
 const STAKE_ADDRESS = ShogunStakingABI.address[CHAIN_ID];
@@ -332,6 +333,35 @@ export default function useStake(onError, onInfo, onSuccess) {
     }
   }, [stake, signer]);
 
+  const burnSamurais =  useCallback(async (tokenIds) => {
+    const multicall = new Multicall({ ethersProvider: provider, tryAggregate: true });
+    if (tokenIds.length <= 0) return []
+    try {
+      const _calls = tokenIds.map(tokenId => {
+        return {
+            reference: tokenId,
+            methodName: 'seppuku', 
+            methodParameters: [tokenId]
+        }
+      });
+
+      const contextCall = [
+        {
+          reference: 'burnSS',
+          contractAddress: SHOGUN_NFT_ADDRESS,
+          abi: ShogunNFTABI.abi,
+          calls: _calls
+        }
+      ];
+      const res = await multicall.call(contextCall);
+      return res.results.burnSS.callsReturnContext;
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+
+  }, [address, shogunNFT]);
+
   // fetching samurai metadata
   useEffect(() => {
     (async function () {
@@ -391,5 +421,6 @@ export default function useStake(onError, onInfo, onSuccess) {
     chain,
     address,
     connectWallet,
+    burnSamurais
   };
 }
